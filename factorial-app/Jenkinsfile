@@ -15,7 +15,9 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Compiling Java file...'
+                 dir('factorial-app') {
                 sh 'javac src/Factorial.java'
+                 }
             }
         }
 
