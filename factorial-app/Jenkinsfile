@@ -6,25 +6,25 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                echo 'Checking out code...'
-            }
-        }
 
         stage('Build') {
             steps {
-                echo 'Compiling Java file...'
-                 dir('factorial-app') {
-                sh 'javac src/Factorial.java'
-                 }
+                echo 'Compiling Java program...'
+                dir('factorial-app') {
+                    sh '''
+                        mkdir -p bin
+                        javac -d bin src/Factorial.java
+                    '''
+                }
             }
         }
 
         stage('Run') {
             steps {
                 echo 'Running Java program...'
-                sh 'java -cp src Factorial'
+                dir('factorial-app') {
+                    sh 'java -cp bin Factorial'
+                }
             }
         }
     }
